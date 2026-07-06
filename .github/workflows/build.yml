@@ -119,7 +119,7 @@ jobs:
           EOF
       - uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
         with:
-          python-version: "3.10"
+          python-version: "3.13"
       - name: Bazel on macOS
         run: |
           set -x -e
@@ -145,7 +145,7 @@ jobs:
     runs-on: macOS-12
     strategy:
       matrix:
-        python: ['3.9', '3.10', '3.11', '3.12']
+        python: ['3.13']
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
@@ -256,7 +256,7 @@ jobs:
           #  export BAZEL_OPTIMIZATION="${BAZEL_OPTIMIZATION} --remote_upload_local_results=true --google_credentials=service_account_creds.json"
           #fi
           TENSORFLOW_VERSION=$(grep tensorflow tensorflow_io/python/ops/version_ops.py | sed -e "s/require = //g" | awk -F, '{print $1}' | awk -F= '{print $2}' | awk -F. '{print $1"."$2}')
-          DOCKER_BUILDKIT=0 docker build -t io -f tools/docker/build.Dockerfile --build-arg PYTHON_VERSION=3.10 --build-arg TENSORFLOW_VERSION="${TENSORFLOW_VERSION}" --build-arg BAZEL_OPTIMIZATION="${BAZEL_OPTIMIZATION}" .
+          DOCKER_BUILDKIT=0 docker build -t io -f tools/docker/build.Dockerfile --build-arg PYTHON_VERSION=3.13 --build-arg TENSORFLOW_VERSION="${TENSORFLOW_VERSION}" --build-arg BAZEL_OPTIMIZATION="${BAZEL_OPTIMIZATION}" .
           docker create -it --name io io bash
           sleep 5
           docker cp -L io:/opt/io/bazel-bin build
@@ -284,7 +284,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        python: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        python: ['3.13']
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
@@ -400,7 +400,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python: ['3.9', '3.10', '3.11', '3.12']
+        python: ['3.13']
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
